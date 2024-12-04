@@ -3,6 +3,9 @@ const newTodoItemBlock = document.getElementById('new-item');
 const editTodoItemTitleEl = document.getElementById('edit-todo-item-title');
 const newTodoItemTitleEl = document.getElementById('new-todo-item-title')
 const todoListEl = document.getElementById('todo-list');
+const listItemTemplateEl= document.getElementById('list-item-template')
+    .content
+    .firstElementChild;
 
 let itemEdited;
 
@@ -33,18 +36,15 @@ function confirmEdit() {
 function addItem() {
     const title = newTodoItemTitleEl.value;
     newTodoItemTitleEl.value = '';
-    const listItemEl = document.createElement('li');
-    const listItemTitleEl = document.createElement('span');
-    const listItemDeleteEl = document.createElement('button');
-    const listItemEditEl = document.createElement('button');
+    const listItemEl = listItemTemplateEl.cloneNode(true);
+    const listItemTitleEl = listItemEl.querySelector('.content');
+    const listItemDeleteEl = listItemEl.querySelector('.delete');
+    const listItemEditEl = listItemEl.querySelector('.edit');
     listItemTitleEl.innerText = title;
     listItemDeleteEl.innerText = 'Delete';
     listItemEditEl.innerText = 'Edit';
     listItemDeleteEl.addEventListener('click', () => listItemEl.remove());
     listItemEditEl.addEventListener('click', () => editItem(listItemTitleEl));
-    listItemEl.append(listItemTitleEl);
-    listItemEl.append(listItemDeleteEl);
-    listItemEl.append(listItemEditEl);
     todoListEl.append(listItemEl);
 }
 
